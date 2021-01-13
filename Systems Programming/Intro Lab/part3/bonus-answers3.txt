@@ -1,0 +1,5 @@
+It appears that the files compiled with the -O3 flag runs significantly faster than the regular files.
+
+The two files compiled with the -O3 flag seem to do the exact same thing as their regular counterparts.
+
+I don't know exactly how this works, but it seems that the -O3 flag optimizes for a better execution time compared to a regular compilation.

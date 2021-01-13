@@ -1,0 +1,2 @@
+part1:
+	gcc part1.c student.c -o part1

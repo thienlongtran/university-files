@@ -1,0 +1,1 @@
+The reason why the values are different is because Figure 1.2 of the textbook shows the ASCII value of each character (# is 35 in ASCII characters), but hello-xxd shows the hexadecimal representation of each character (# is 23 in hexadecimal).

@@ -1,0 +1,1 @@
+hello.c contains the pure, functional code that was created directly by the programmer. hello.i is the product after the preprocessor 'sets up' if you will the directives, or lines start begin with "#", of hello.c. This process is a step in the over-arching process of turning readable C-code into machine instructions.

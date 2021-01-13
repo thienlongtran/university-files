@@ -1,0 +1,12 @@
+The reason why copyij runs faster than copyji is because copyij takes advantage of the memory system better than copyji.
+
+The way that copyij works is that the first index gets accessed first and each element in that index is sucessively accessed one-by-one. Each element is directly down the line from the preceding element in memory, so there isn't much "jump" that's done.
+
+However, copyji accesses the location of each first index and only retrieves the first element and continues the cycle until it reaches the end, then it accesses the second element of each index and so on. This requires a lot of jumping and a lot of additional loading that's effectively wasted.
+
+It's similar to emptying a row of boxes: if there was 5 boxes filled with items lined up, which would be faster - completely emptying each box one-by-one down the line or taking a single item out of box one, walking down to box 2 and doing the same, and on and on until every box is empty?
+
+Similar to the computer, it would be faster to just walk to one location and access the items of that location and move on rather than having to "load" by jumping to the next location and only accessing one and so on.
+
+
+That's why these two seemingly-identical functions would have drastically different runtimes.

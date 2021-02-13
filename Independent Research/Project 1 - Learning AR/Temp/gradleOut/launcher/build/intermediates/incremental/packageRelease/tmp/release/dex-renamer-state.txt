@@ -1,0 +1,4 @@
+#Fri Feb 12 22:28:49 CST 2021
+base.0=/home/intensiti/Desktop/Project 1 - Learning AR/Temp/gradleOut/launcher/build/intermediates/dex/release/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

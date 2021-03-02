@@ -1,0 +1,2 @@
+Words where the average of features is greater than 500:
+CNN

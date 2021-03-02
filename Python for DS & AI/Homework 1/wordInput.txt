@@ -1,0 +1,7 @@
+Word
+AI
+CMU
+Data
+ML
+CNN
+Classifier

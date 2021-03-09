@@ -1,0 +1,6 @@
+curl http://api.icndb.com/jokes/random | jq '.value.joke' | cowsay -f turtle | lolcat
+
+#curl http://api.icndb.com/jokes/random - Fetch a random Chuck Norris joke as JSON
+#jq '.value.joke' - Parse the JSON file from above and return the joke
+#cowsay -f turtle - Print out the turtle (for Thien Tran) and pipe the joke into it
+#lolcat - Rainbowfy the output!!!

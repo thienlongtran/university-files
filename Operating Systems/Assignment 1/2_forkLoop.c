@@ -8,9 +8,11 @@ int main(int argc, char *argv[]) {
   	usleep(10000);
   }
   
-  //printf("PID: %d ; PPID: %d\n",getpid(),getppid());
-
-  printf("%d ; %d\n",getpid(),getppid()); 
-  usleep(8000000);
+  
+  
+  FILE *out = fopen("out.txt", "a");
+  printf("PID: %d ; PPID: %d\n",getpid(),getppid());
+  fprintf(out, "%d ; %d\n",getpid(),getppid()); 
+  usleep(8000000); //Wait before exiting to fix PPID mismatch
   return 0;
 }

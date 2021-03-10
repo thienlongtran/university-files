@@ -1,7 +1,7 @@
 import graphviz
 from graphviz import Digraph
 
-inp = open("out.txt")
+inp = open("2_out.txt")
 
 #Child PIDS; Parent PIDS
 processes = inp.read()
@@ -20,4 +20,4 @@ for i in processList:
     forksProcessTree.node(PPID, "PID: " + PPID)
     forksProcessTree.edge(i.split(" ; ")[1], PID)
 
-forksProcessTree.render("processTree.gv", view=True)
+forksProcessTree.render("2_processTree.gv", view=True)

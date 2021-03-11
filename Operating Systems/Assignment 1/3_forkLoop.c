@@ -8,9 +8,7 @@ int main(int argc, char *argv[]) {
   	if(fork() != 0){
 		//Parent Code
   		waitpid(-1, &status, 0);
-  	}
-  	else{
-  		continue;
+  		break;
   	}
   	
   }

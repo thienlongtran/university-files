@@ -12,12 +12,12 @@ public class PrimeSolver {
 		long n = 72980630856892961L;
 
 		//Calculate with one thread
-		boolean result;
+		AtomicBoolean oneThreadResult = new AtomicBoolean();
 		startTime = System.currentTimeMillis();
-		result = isPrime(n);
+		oneThreadResult = isPrimeOneThread(n);
 		endTime = System.currentTimeMillis();
 		System.out.println("Elapsed Time - One Thread: "+(double)(endTime-startTime)/1000 + " seconds");
-		System.out.println("Is Prime: " + result);
+		System.out.println("Is Prime: " + oneThreadResult.get());
 
 		//Calculate with two threads
 		AtomicBoolean twoThreadResult = new AtomicBoolean();
@@ -40,14 +40,35 @@ public class PrimeSolver {
 	/**
 	 * Figure out if number is prime with only one thread.
 	 */
-	public static boolean isPrime(final long num){
+	public static AtomicBoolean isPrimeOneThread(final long num){
+		
+		//The code below is more efficient and will work for single threaded.
+		//However, we'll create the PrimeThread structure like the other isPrime methods regardless to ensure that overhead time is not factored into execution time result.
+		/*
 		boolean result = true;
-
 		for(int i = 2; i <= (int)Math.sqrt(num) + 1; i++){
 			if(num % i == 0){
 				result = false;
 				break;
 			}
+		}
+		*/
+
+		AtomicBoolean result = new AtomicBoolean(true);
+		int sqrtN = (int)Math.sqrt(num) + 1;
+
+		PrimeThread thread = new PrimeThread(num, result, 2, sqrtN);
+
+		ExecutorService seriesThreads = Executors.newCachedThreadPool();
+
+		//Start each thread
+		seriesThreads.execute(thread);
+
+		seriesThreads.shutdown();
+		
+		//Waits until all threads are finished before continuing
+		while(!seriesThreads.isTerminated()){
+			
 		}
 
 		return result;

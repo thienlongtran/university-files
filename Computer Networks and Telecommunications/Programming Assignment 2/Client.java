@@ -37,6 +37,7 @@ public class Client{
 
     }
     
+    //handles printing any messages in messages LinkedList
     class printMessagesThread implements Runnable{
         private LinkedList<String> messages;
         public printMessagesThread(LinkedList<String> messages){
@@ -60,6 +61,7 @@ public class Client{
         }
     }
 
+    //handles writing the system input from the client to the server
     class writeInputsThread implements Runnable{
         public writeInputsThread(){
             scanner = new Scanner(System.in);
@@ -82,6 +84,7 @@ public class Client{
         }
     }
 
+    //handles adding any messages from the server to the messages LinkedList
     class readMessagesThread implements Runnable{
         private LinkedList<String> messages;
         public readMessagesThread(LinkedList<String> messages){
@@ -105,6 +108,7 @@ public class Client{
         }
     }
 
+    //connects to the server
     private void connectToServer(String address, int port){
         try{
             socket = new Socket(address, port);

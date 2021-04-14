@@ -103,6 +103,7 @@ public class Server{
                 messages.add(tie);
                 writeToClients(tie);
             }
+            //Other Possible Combinations
             else{
                 writeToClients(moves);
                 if(move1.equals("spell") && move2.equals("shield")){
@@ -124,12 +125,15 @@ public class Server{
                     writeToClients(String.format("%s wins this round!\n", user2.getUsername()));
                 }
                 else{
+                    //Shouldn't be able to reach here since selections should account for the 9 possible combinations...
+                    //But something has been unaccounted for if this comes true...
                     System.out.println("Something has gone wrong...");
                 }
             }
         }
     }
 
+    //writes a message to each connected clients
     public void writeToClients(String message){
         for(connectionThread connection : connections){
             connection.writeToClient(message);
@@ -137,7 +141,7 @@ public class Server{
     }
 }
 
-
+//thread handles printing of any messages added to the messages LinkedList
 class printMessagesThread implements Runnable{
     private LinkedList<String> messages;
     public printMessagesThread(LinkedList<String> messages){
@@ -147,6 +151,8 @@ class printMessagesThread implements Runnable{
     @Override
     public void run(){
         TimeUnit time = TimeUnit.MILLISECONDS;
+
+        //retrieve, delete, and print any messages in messages LinkedList
         while(true){
             try{
                 String newMessage = messages.poll();
@@ -161,6 +167,7 @@ class printMessagesThread implements Runnable{
     }
 }
 
+//thread handles connections to the individual clients
 class connectionThread implements Runnable{
     private String username = null;
     private boolean isConnected = false;
@@ -175,10 +182,17 @@ class connectionThread implements Runnable{
         this.messages = messages;
     }
 
+    //returns if a client is connected and has a username
     public boolean isConnected(){
         return isConnected;
     }
 
+    //returns username given by the client
+    public String getUsername(){
+        return this.username;
+    }
+
+    //sets up a connection thread
     @Override
     public void run(){
         try{
@@ -207,10 +221,7 @@ class connectionThread implements Runnable{
         }
     }
 
-    public String getUsername(){
-        return this.username;
-    }
-
+    //reads any inputs from the client
     public String readInput(){
         String input = "";
 
@@ -227,6 +238,7 @@ class connectionThread implements Runnable{
         return input;
     }
 
+    //write a string to the client
     public void writeToClient(String message){
         try{
             out.writeUTF("Server: " + message);

@@ -39,6 +39,10 @@ public class Runner{
         catch(InterruptedException e){e.printStackTrace();}
         System.setOut(console);
         System.out.println("60 seconds elapsed. Program finished.");
+        P0.printTotalTimes();
+        P1.printTotalTimes();
+        P2.printTotalTimes();
+        P3.printTotalTimes();
         System.exit(0);
         
 

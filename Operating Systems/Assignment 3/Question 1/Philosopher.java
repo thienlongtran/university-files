@@ -8,6 +8,10 @@ public class Philosopher implements Runnable{
     private int philosopherNumber;
     private long startTime;
 
+    private long totalTimeThinking;
+    private long totalTimeHungry;
+    private long totalTimeEating;
+
     public Philosopher(Fork leftFork, Fork rightFork, int philosopherNumber){
         this.leftFork = leftFork;
         this.rightFork = rightFork;
@@ -21,8 +25,12 @@ public class Philosopher implements Runnable{
         System.out.printf("Philosopher: %d, Time: %d ms, running\n", philosopherNumber, getCurrentTime());
         while(true){
             System.out.printf("Philosopher: %d, Time: %d ms, entering hungry state\n", philosopherNumber, getCurrentTime());
+            long startHungry = getCurrentTime();
             pickupLeftFork();
             pickupRightFork();
+            long timeHungry = getCurrentTime() - startHungry;
+            totalTimeHungry = totalTimeHungry + timeHungry;
+            eat();
             think();
         }
     }
@@ -60,11 +68,6 @@ public class Philosopher implements Runnable{
             if(rightFork.isAvailable()){
                 rightFork.pickupFork();
                 System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), rightFork.getForkNumber());
-                long eatTime = rand.nextInt(30) + 10;
-                System.out.printf("Philosopher: %d, Time: %d ms, entering eating state. Will eat for %d ms\n", philosopherNumber, getCurrentTime(), eatTime);
-                TimeUnit.MILLISECONDS.sleep(eatTime);
-                leftFork.putdownFork();
-                rightFork.putdownFork();
             }
             else{
                     long time = rand.nextInt(50) + 50;
@@ -100,6 +103,7 @@ public class Philosopher implements Runnable{
     private void think(){
         try{
             long thinkTime = 10;
+            totalTimeThinking = totalTimeThinking + thinkTime;
             System.out.printf("Philosopher: %d, Time: %d ms, entering think state. Will think for %d ms\n", philosopherNumber, getCurrentTime(), thinkTime);
             TimeUnit.MILLISECONDS.sleep(thinkTime);
         }
@@ -111,11 +115,19 @@ public class Philosopher implements Runnable{
 
     //Philosopher is hungry
     private void eat(){
-        while(true){
-            System.out.printf("Philosopher: %d, Time: %d ms, entering hungry state.\n", philosopherNumber, getCurrentTime());
-            pickupLeftFork();
-            pickupRightFork();
-            think();
+        try{
+            long eatTime = rand.nextInt(30) + 10;
+            System.out.printf("Philosopher: %d, Time: %d ms, entering eating state. Will eat for %d ms\n", philosopherNumber, getCurrentTime(), eatTime);
+            TimeUnit.MILLISECONDS.sleep(eatTime);
+            totalTimeEating = totalTimeEating + eatTime;
+            leftFork.putdownFork();
+            rightFork.putdownFork();
+        }catch(InterruptedException e){
+            e.printStackTrace();
         }
+    }
+
+    public void printTotalTimes(){
+        System.out.printf("Philosopher %d total times:\n Hungry: %d ms\n Eating: %d ms\n Thinking: %d ms\n\n", philosopherNumber, totalTimeHungry, totalTimeEating, totalTimeThinking);
     }
 }

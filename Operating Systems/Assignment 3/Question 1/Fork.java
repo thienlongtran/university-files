@@ -2,10 +2,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Fork{
     private AtomicBoolean isAvailable;
+    private int forkNumber;
 
-    public Fork(){
+    public Fork(int forkNumber){
         this.isAvailable = new AtomicBoolean(true);
-        System.out.println(isAvailable);
+        this.forkNumber = forkNumber;
+    }
+
+    public int getForkNumber(){
+        return this.forkNumber;
     }
 
     //Returns true if fork hasn't been 'picked' up yet.

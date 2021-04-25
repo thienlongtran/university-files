@@ -22,10 +22,7 @@ public class Philosopher implements Runnable{
     public void run(){
         System.out.printf("Philosopher: %d, Time: %d ms, running\n", philosopherNumber, getCurrentTime());
         while(true){
-            System.out.printf("Philosopher: %d, Time: %d ms, entering hungry state\n", philosopherNumber, getCurrentTime());
-            pickupLeftFork();
-            pickupRightFork();
-            think();
+            eat();
         }
     }
 
@@ -34,18 +31,20 @@ public class Philosopher implements Runnable{
         return System.currentTimeMillis() - this.startTime;
     }
 
-    private void pickupLeftFork(){
+    private boolean pickupLeftFork(){
         //Pickup Left Fork
         if(leftFork.isAvailable()){
             leftFork.pickupFork();
             System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), leftFork.getForkNumber());
+            return true;
         }
         else{
             System.out.printf("Philosopher: %d, Time: %d ms, tried to pick up fork %d, it's unavailable\n", philosopherNumber, getCurrentTime(), leftFork.getForkNumber());
+            return false;
         }
     }
 
-    private void pickupRightFork(){
+    private boolean pickupRightFork(){
         //Pickup Right Fork (once Left Fork is also picked up)
         if(rightFork.isAvailable()){
             rightFork.pickupFork();
@@ -55,10 +54,12 @@ public class Philosopher implements Runnable{
             leftFork.putdownFork();
             rightFork.putdownFork();
             waiter.finishedEating();
+            return true;
         }
         else{
             leftFork.putdownFork();
             waiter.finishedEating();
+            return false;
         }
     }
 
@@ -82,9 +83,21 @@ public class Philosopher implements Runnable{
             while(waiter.askToEat() == false){
                 //do nothing while waiter doesn't allow philosopher to eat
             }
-            
-            pickupLeftFork();
-            pickupRightFork();
+
+            if(pickupLeftFork()){
+                //pass
+            }
+            else{
+                continue;
+            }
+
+            if(pickupRightFork()){
+                //pass
+            }
+            else{
+                continue;
+            }
+
             think();
         }
     }

@@ -20,13 +20,10 @@ public class Philosopher implements Runnable{
     public void run(){
         System.out.printf("Philosopher: %d, Time: %d ms, running\n", philosopherNumber, getCurrentTime());
         while(true){
-            try{
-                eat();
-                TimeUnit.MILLISECONDS.sleep(20);
-            }
-            catch(InterruptedException e){
-                e.printStackTrace();
-            }
+            System.out.printf("Philosopher: %d, Time: %d ms, entering hungry state\n", philosopherNumber, getCurrentTime());
+            pickupLeftFork();
+            pickupRightFork();
+            think();
         }
     }
 
@@ -115,6 +112,7 @@ public class Philosopher implements Runnable{
     //Philosopher is hungry
     private void eat(){
         while(true){
+            System.out.printf("Philosopher: %d, Time: %d ms, entering hungry state.\n", philosopherNumber, getCurrentTime());
             pickupLeftFork();
             pickupRightFork();
             think();

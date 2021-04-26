@@ -18,21 +18,11 @@ public class Fork{
         return isAvailable.get();
     }
 
-    public void pickupFork(){
-        if(isAvailable()){
-            isAvailable.set(false);
-        }
-        else{
-            System.out.println("Something went wrong. Fork is unavailable but pickupFork was called.");
-        }
+    public synchronized void pickupFork(){
+        isAvailable.set(false);
     }
 
-    public void putdownFork(){
-        if(!isAvailable()){
-            isAvailable.set(true);
-        }
-        else{
-            System.out.println("Something went wrong. Fork is available but putdownFork was called.");
-        }
+    public synchronized void putdownFork(){
+        isAvailable.set(true);
     }
 }

@@ -1,18 +1,19 @@
-        .data
+    .data
 	initString: .asciiz "This program prints the factorial of a number.\n"
 	promptUser:   .asciiz "Enter a POSITIVE INTEGER between (inclusive) 0-12: "
 	resultString: .asciiz "Result of factorial: "
 	errorNumberNegative: .asciiz "ERROR: negative numbers can not be used.\n"
 	errorNumberTooBig: .asciiz "ERROR: numbers above 12 can not be used.\n"
 
-        .text
-        .globl main
+    .text
+    .globl main
 main:
+	#Print Info about Program and Prompts User for Integer
 	li $v0, 4
 	la $a0, initString
 	syscall
-        la $a0, promptUser
-        syscall
+    la $a0, promptUser
+    syscall
 
 	#Read Input and Save to $a0
 	li $v0, 5

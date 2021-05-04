@@ -33,50 +33,60 @@ main:
 	beq $a0, $t0, numIsZero
 	
 	#Get Factorial When Previous Cases False
-	add $t0, $a0, $zero
-	addi $t1, $zero, 1
+	add $t0, $a0, $zero #Move Inpout to $t0 (for recursion calls)
+	add $t2, $a0, $zero #Move Inpout to $t2 (for recursion jump backs)
+	addi $s0, $zero, 1
 	j factorialLoop
 
+#Call Recursion Until Num = 1
 factorialLoop:
 	#t0 = Current Iteration Index
-	#t1 = Current Result of Factorial
-	beq $t0, $zero, ExitFromFactorial
-	mul $t1, $t1, $t0
-	addi $t0, $t0, -1
+	beq $t0, $zero, factorialUnloop #Stop recursion calls and start 'hopping' back out when num = 1
+	addi $sp, $sp, -4 #Allocate stack space for current Iteration Index
+	sw $t0, ($sp) #Save current Iteration Index to stack
+	addi $t0, $t0, -1 #Decrement iteration
 	j factorialLoop
-	
-ExitFromFactorial:
-	li $v0, 4
-	la $a0, resultString
-	syscall
-	li $v0, 1
-	add $a0, $zero, $t1
-	syscall
-	jr $ra
 
-printResult:
-	li $v0, 1
-	syscall
-        
-        jr $ra
+#'Hop Out' of the Recursion call stack
+factorialUnloop:
+	#s0 = Current Result of Factorial (starts at 1)
+	beq $t2, $zero, Exit #Exit program when iteration index = 0
+	addi $t2, $t2, -1 #Decrement iteration idnex
+	lw $t5, ($sp) #Load recursive call items from stack to $t5
+	addi $sp, $sp, 4 #Move down stack when item retrieved
+	mul $s0, $s0, $t5 #Multiply current result of factorial by current iteration
+	j factorialUnloop
 
 numTooBig:
+	#Print Too Big Error Message and Exit Program
 	li $v0, 4
 	la $a0, errorNumberTooBig
 	syscall
-	jr $ra
+	li $v0, 10
+    syscall
 
 negativeNumber:
+	#Print Negative Number Error Message and Exit Program
 	li $v0, 4
 	la $a0, errorNumberNegative
 	syscall
-	jr $ra
+	li $v0, 10
+    syscall
 
 numIsZero:
+	#Set Result of Factorial to 0 and jump to Exit
 	li $v0, 4
 	la $a0, resultString
 	syscall
+	addi $s0, $zero, 1
+	j Exit
+
+Exit:
+	#Print Number
 	li $v0, 1
-	addi $a0, $zero, 1
+	add $a0, $zero, $s0
 	syscall
-	jr $ra
+
+	#Terminate Program
+    li $v0, 10
+    syscall

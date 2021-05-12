@@ -1,31 +1,32 @@
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Waiter {
-
-    //True when there is a philosopher trying to eat
-    //Prevents multiple philosophers picking up fork at same time
-    private AtomicBoolean aPhilosopherIsEating;
+    //Index of philosopher name is true when that philosopher is eating.
+    private boolean[] semaphore;
 
     public Waiter(){
-        this.aPhilosopherIsEating = new AtomicBoolean(false);
+       semaphore = new boolean[4]; //initialize AtomicBoolean array with all values false.
     }
 
-     //Allow the philosopher to eat if no other philosophers are eating
-    public synchronized boolean askToEat(){
-        if(aPhilosopherIsEating.get()){
-            return false;
-        }
-        else if (!aPhilosopherIsEating.get()){
-            aPhilosopherIsEating.set(true);
+     //Philosopher uses this function to ask the waiter/semaphore if they can eat.
+    public synchronized boolean askToEat(int philosopherNumber){
+        int leftPhilosopherNumber = 0;//(philosopherNumber + 1) % 3;
+        int rightPhilosopherNumber = 1;//(philosopherNumber - 1) % 3;
+
+        //Allow philosopher to eat if their neighbors are not currently eating.
+        if(semaphore[leftPhilosopherNumber] == false && semaphore[rightPhilosopherNumber] == false){
+            semaphore[philosopherNumber] = true;
             return true;
         }
+
+        //Prevent philosopher from eating if one of their neighbors are eating.
         else{
             return false;
         }
     }
 
-    //Allow philosopher to tell waiter that they're finished eating
-    public synchronized void finishedEating(){
-        this.aPhilosopherIsEating.set(false);
+    //Allow philosopher to tell waiter/semaphore that they're finished eating.
+    public synchronized void finishedEating(int philosopherNumber){
+        semaphore[philosopherNumber] = false;
     }
 }

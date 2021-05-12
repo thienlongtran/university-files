@@ -1,13 +1,18 @@
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Random;
 
 public class Philosopher implements Runnable{
     private Random rand;
     private Fork leftFork;
     private Fork rightFork;
+
     private int philosopherNumber;
+    private int leftPhilosopherNumber;
+    private int rightPhilosopherNumber;
+
     private long startTime;
-    private Waiter waiter;
+    private AtomicBoolean[] semaphore;
     private boolean threadShouldBeRunning;
 
     private long totalTimeThinking;
@@ -18,14 +23,22 @@ public class Philosopher implements Runnable{
     private long totalAmountHungry;
     private long totalAmountEating;
 
-    public Philosopher(Fork leftFork, Fork rightFork, int philosopherNumber, Waiter waiter){
+    public Philosopher(Fork leftFork, Fork rightFork, int philosopherNumber, AtomicBoolean[] semaphore){
         this.leftFork = leftFork;
         this.rightFork = rightFork;
         this.philosopherNumber = philosopherNumber;
-        this.waiter = waiter;
+        this.semaphore = semaphore;
         this.rand = new Random();
         this.startTime = System.currentTimeMillis();
         this.threadShouldBeRunning = true;
+
+        this.leftPhilosopherNumber = (philosopherNumber + 1) % 4;
+        this.rightPhilosopherNumber = (philosopherNumber - 1) % 4;
+
+        //Deals with edge case when philosopher == 0 because in Java (0 - 1) % 4 == -1 which is incorrect for modulus.
+        if(philosopherNumber == 0){
+            rightPhilosopherNumber = 3;
+        }
     }
 
     public long getTotalAmountHungry() {
@@ -62,7 +75,6 @@ public class Philosopher implements Runnable{
         System.out.printf("Philosopher: %d, Time: %d ms, running\n", philosopherNumber, getCurrentTime());
         while(threadShouldBeRunning){
             eat();
-            think();
         }
     }
 
@@ -83,39 +95,50 @@ public class Philosopher implements Runnable{
     //Philosopher is hungry
     private void eat(){
         while(threadShouldBeRunning){
-            System.out.printf("Philosopher: %d, Time: %d ms, entering hungry state.\n", philosopherNumber, getCurrentTime());
+            try{
+                System.out.printf("Philosopher: %d, Time: %d ms, entering hungry state.\n", philosopherNumber, getCurrentTime());
 
-            long startHungry = getCurrentTime(); //time before philosopher asks semaphore/waiter to eat
+                long startHungry = getCurrentTime();
 
-            boolean philosopherPrintedUnavailableMessage = false; //ensure that philosopher only prints once if neighbor is currently eating
+                boolean philosopherPrintedUnavailableMessage = false; //ensure that philosopher only prints once if neighbor is currently eating
 
-            while(waiter.askToEat(philosopherNumber) == false){
-                //do nothing while waiter/semaphore doesn't allow philosopher to eat
-                if(philosopherPrintedUnavailableMessage == false){
-                    philosopherPrintedUnavailableMessage = true;
-                    System.out.printf("Philosopher: %d, Time: %d ms, a neighbor is currently eating. Waiting on the semaphore.\n", philosopherNumber, getCurrentTime());
+                //do nothing while neighboring philosopher in semaphore is eating
+                while(semaphore[leftPhilosopherNumber].get() || semaphore[rightPhilosopherNumber].get()){
+                    //print out once if philosopher is currently waiting
+                    if(philosopherPrintedUnavailableMessage == false){
+                        philosopherPrintedUnavailableMessage = true;
+                        System.out.printf("Philosopher: %d, Time: %d ms, a neighbor is currently eating. Waiting on the semaphore.\n", philosopherNumber, getCurrentTime());
+                    }
                 }
+
+                long timeHungry = getCurrentTime() - startHungry;
+                totalTimeHungry = totalTimeHungry + timeHungry;
+                totalAmountHungry = totalAmountHungry + 1;
+
+                leftFork.pickupFork();
+                rightFork.pickupFork();
+                
+                //Start Eating Process
+                semaphore[philosopherNumber].set(true);
+                System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), leftFork.getForkNumber());
+                System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), rightFork.getForkNumber());
+                long eatTime = rand.nextInt(30) + 10;
+                totalTimeEating = totalTimeEating + eatTime;
+                totalAmountEating = totalAmountEating + 1;
+                System.out.printf("Philosopher: %d, Time: %d ms, no neighbors are eating - entering eating state. Will eat for %d ms\n", philosopherNumber, getCurrentTime(), eatTime);
+                TimeUnit.MILLISECONDS.sleep(eatTime);
+
+                //Finish Eating
+                leftFork.putdownFork();
+                rightFork.putdownFork();
+                semaphore[philosopherNumber].set(false);
+
+                think();
+
             }
-
-            long timeHungry = getCurrentTime() - startHungry;
-            totalTimeHungry = totalTimeHungry + timeHungry;
-            totalAmountHungry = totalAmountHungry + 1;
-
-            leftFork.pickupFork();
-            rightFork.pickupFork();
-            
-            //Start Eating Process
-            System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), leftFork.getForkNumber());
-            System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), rightFork.getForkNumber());
-            long eatTime = rand.nextInt(30) + 10;
-            totalTimeEating = totalTimeEating + eatTime;
-            totalAmountEating = totalAmountEating + 1;
-            System.out.printf("Philosopher: %d, Time: %d ms, no neighbors are eating - entering eating state. Will eat for %d ms\n", philosopherNumber, getCurrentTime(), eatTime);
-
-            //Finish Eating
-            leftFork.putdownFork();
-            rightFork.putdownFork();
-            waiter.finishedEating(philosopherNumber);
+            catch(InterruptedException e){
+                e.printStackTrace();
+            } 
         }
     }
 

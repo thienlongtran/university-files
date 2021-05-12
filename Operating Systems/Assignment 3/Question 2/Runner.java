@@ -1,7 +1,6 @@
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.io.*;
 
 public class Runner{
@@ -16,18 +15,12 @@ public class Runner{
         System.out.println("Program running - please wait...");
         System.setOut(output);
 
-        //Initialize AtomicBoolean Semaphore Array
-        AtomicBoolean[] semaphore = new AtomicBoolean[4];
-        semaphore[0] = new AtomicBoolean(false);
-        semaphore[1] = new AtomicBoolean(false);
-        semaphore[2] = new AtomicBoolean(false);
-        semaphore[3] = new AtomicBoolean(false);
-
         Fork F0 = new Fork(0);
         Fork F1 = new Fork(1);
         Fork F2 = new Fork(2);
         Fork F3 = new Fork(3);
 
+        boolean[] semaphore = new boolean[4];
         Philosopher P0 = new Philosopher(F0, F3, 0, semaphore);
         Philosopher P1 = new Philosopher(F1, F0, 1, semaphore);
         Philosopher P2 = new Philosopher(F2, F1, 2, semaphore);

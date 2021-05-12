@@ -1,5 +1,4 @@
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Random;
 
 public class Philosopher implements Runnable{
@@ -12,7 +11,7 @@ public class Philosopher implements Runnable{
     private int rightPhilosopherNumber;
 
     private long startTime;
-    private AtomicBoolean[] semaphore;
+    private boolean[] semaphore;
     private boolean threadShouldBeRunning;
 
     private long totalTimeThinking;
@@ -23,7 +22,7 @@ public class Philosopher implements Runnable{
     private long totalAmountHungry;
     private long totalAmountEating;
 
-    public Philosopher(Fork leftFork, Fork rightFork, int philosopherNumber, AtomicBoolean[] semaphore){
+    public Philosopher(Fork leftFork, Fork rightFork, int philosopherNumber, boolean[] semaphore){
         this.leftFork = leftFork;
         this.rightFork = rightFork;
         this.philosopherNumber = philosopherNumber;
@@ -103,7 +102,7 @@ public class Philosopher implements Runnable{
                 boolean philosopherPrintedUnavailableMessage = false; //ensure that philosopher only prints once if neighbor is currently eating
 
                 //do nothing while neighboring philosopher in semaphore is eating
-                while(semaphore[leftPhilosopherNumber].get() || semaphore[rightPhilosopherNumber].get()){
+                while(semaphore[leftPhilosopherNumber] == true || semaphore[rightPhilosopherNumber] == true){
                     //print out once if philosopher is currently waiting
                     if(philosopherPrintedUnavailableMessage == false){
                         philosopherPrintedUnavailableMessage = true;
@@ -119,7 +118,7 @@ public class Philosopher implements Runnable{
                 rightFork.pickupFork();
                 
                 //Start Eating Process
-                semaphore[philosopherNumber].set(true);
+                semaphore[philosopherNumber] = true;
                 System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), leftFork.getForkNumber());
                 System.out.printf("Philosopher: %d, Time: %d ms, picked up fork %d\n", philosopherNumber, getCurrentTime(), rightFork.getForkNumber());
                 long eatTime = rand.nextInt(30) + 10;
@@ -131,7 +130,7 @@ public class Philosopher implements Runnable{
                 //Finish Eating
                 leftFork.putdownFork();
                 rightFork.putdownFork();
-                semaphore[philosopherNumber].set(false);
+                semaphore[philosopherNumber] = false;
 
                 think();
 

@@ -8,12 +8,12 @@ CREATE TABLE Seller(
     SocialSecurityNumber NUMBER(9),
     SellerName VARCHAR(34) NOT NULL,
     PhoneNumber NUMBER(10) NOT NULL,
-    SpouseName VARCHAR(34),
+    SpouseName VARCHAR(34) DEFAULT '',
     CONSTRAINT SellerPk PRIMARY KEY(SocialSecurityNumber)
 );
 
 CREATE TABLE Agent(
-    AgentID CHAR(8),
+    AgentID CHAR(7),
     AgentName VARCHAR(34) NOT NULL,
     OfficeName VARCHAR(20) NOT NULL,
     CONSTRAINT AgentPk PRIMARY KEY(AgentID)
@@ -25,7 +25,7 @@ CREATE Table House(
     StateName VARCHAR(14) NOT NULL,
     SquareFeet NUMBER(6) NOT NULL,
     AskingPrice NUMBER(10) NOT NULL,
-    CommisionPercent NUMBER(3) NOT NULL,
+    CommisionPercent NUMBER(5, 2) NOT NULL,
     SellerID NUMBER(9),
     AgentID CHAR(8),
     CONSTRAINT HousePk PRIMARY KEY(HomeID),
@@ -36,8 +36,8 @@ CREATE Table House(
 );
 
 CREATE TABLE AgentPhone(
-    PhoneNumber NUMBER(10),
     AgentID CHAR(8),
+    PhoneNumber NUMBER(10),
     CONSTRAINT PhonePk PRIMARY KEY(PhoneNumber),
     CONSTRAINT PhoneFk FOREIGN KEY(AgentID)
         REFERENCES Agent(AgentID)

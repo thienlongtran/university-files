@@ -1,8 +1,8 @@
 DROP TABLE House;
-DROP TABLE AgentPhone;
+DROP TABLE RealEstateAgentPhone;
 DROP TABLE Buyer;
 DROP TABLE Seller;
-DROP TABLE Agent;
+DROP TABLE RealEstateAgent;
 
 CREATE TABLE Seller(
     SocialSecurityNumber NUMBER(9),
@@ -12,11 +12,11 @@ CREATE TABLE Seller(
     CONSTRAINT SellerPk PRIMARY KEY(SocialSecurityNumber)
 );
 
-CREATE TABLE Agent(
+CREATE TABLE RealEstateAgent(
     AgentID CHAR(7),
     AgentName VARCHAR(34) NOT NULL,
     OfficeName VARCHAR(20) NOT NULL,
-    CONSTRAINT AgentPk PRIMARY KEY(AgentID)
+    CONSTRAINT RealEstateAgentPk PRIMARY KEY(AgentID)
 );
 
 CREATE Table House(
@@ -27,20 +27,20 @@ CREATE Table House(
     AskingPrice NUMBER(10) NOT NULL,
     CommisionPercent NUMBER(5, 2) NOT NULL,
     SellerID NUMBER(9),
-    AgentID CHAR(8),
+    AgentID CHAR(7),
     CONSTRAINT HousePk PRIMARY KEY(HomeID),
     CONSTRAINT HouseSellerFk FOREIGN KEY(SellerID)
         REFERENCES Seller(SocialSecurityNumber),
     CONSTRAINT HouseAgentFk FOREIGN KEY(AgentID)
-        REFERENCES Agent(AgentID)
+        REFERENCES RealEstateAgent(AgentID)
 );
 
-CREATE TABLE AgentPhone(
-    AgentID CHAR(8),
+CREATE TABLE RealEstateAgentPhone(
+    AgentID CHAR(7),
     PhoneNumber NUMBER(10),
     CONSTRAINT PhonePk PRIMARY KEY(PhoneNumber),
     CONSTRAINT PhoneFk FOREIGN KEY(AgentID)
-        REFERENCES Agent(AgentID)
+        REFERENCES RealEstateAgent(AgentID)
 );
 
 CREATE TABLE Buyer(
@@ -49,8 +49,8 @@ CREATE TABLE Buyer(
     PhoneNumber NUMBER(10) NOT NULL,
     LowerPriceLimit NUMBER(10) NOT NULL,
     UpperPriceLimit NUMBER(10) NOT NULL,
-    AgentID CHAR(8),
+    AgentID CHAR(7),
     CONSTRAINT BuyerPk PRIMARY KEY(SocialSecurityNumber),
-    CONSTRAINT AgentRepresentingFk FOREIGN KEY(AgentID)
-        REFERENCES Agent(AgentID)
+    CONSTRAINT RealEstateAgentRepresentingFk FOREIGN KEY(AgentID)
+        REFERENCES RealEstateAgent(AgentID)
 );

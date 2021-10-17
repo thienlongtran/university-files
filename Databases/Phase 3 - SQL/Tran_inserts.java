@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -9,18 +8,25 @@ import java.io.IOException;
 class Inserts{
     //Inputs: Table Name, CSV File Name
     public static void main(String[] args) {
-        String tableName = args[0];
-        String csvName = args[1];
-
-        File csvFile = new File(csvName);
-
         try{
             FileWriter fw = new FileWriter("Tran_inserts.sql", true);
             BufferedWriter bw = new BufferedWriter(fw);
+
+            //Write Commit Message if Called
+            if (args[0].equals("writeCommit")){
+                bw.write("COMMIT;");
+                bw.close();
+                System.exit(0);
+            }
+            
+            String tableName = args[0];
+            String csvName = args[1];
+            File csvFile = new File(csvName);
             Scanner input = new Scanner(csvFile);
             String[] columnName = input.nextLine().split(",");
 
             while(input.hasNextLine()){
+
                 String str = input.nextLine();
                 String[] attributes = str.split(",");
                 
@@ -65,6 +71,7 @@ class Inserts{
                 bw.write(insertCommand);
             }
             bw.close();
+            input.close();
         }
         catch(IOException e){
             e.printStackTrace();

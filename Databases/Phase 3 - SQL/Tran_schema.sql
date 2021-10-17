@@ -1,0 +1,54 @@
+DROP TABLE House;
+DROP TABLE AgentPhone;
+DROP TABLE Buyer;
+DROP TABLE Seller;
+DROP TABLE Agent;
+
+CREATE TABLE Seller(
+    SocialSecurityNumber NUMBER(9),
+    SellerName VARCHAR(34),
+    PhoneNumber NUMBER(10),
+    SpouseName VARCHAR(34),
+    CONSTRAINT SellerPk PRIMARY KEY(SocialSecurityNumber)
+);
+
+CREATE TABLE Agent(
+    AgentID CHAR(8),
+    AgentName VARCHAR(34),
+    OfficeName VARCHAR(20),
+    CONSTRAINT AgentPk PRIMARY KEY(AgentID)
+);
+
+CREATE Table House(
+    HomeID CHAR(7),
+    StreetAddress VARCHAR(28),
+    StateName VARCHAR(14),
+    SquareFeet NUMBER(6),
+    SellerID NUMBER(9),
+    AgentID CHAR(8),
+    CONSTRAINT HousePk PRIMARY KEY(HomeID),
+    CONSTRAINT HouseSellerFk FOREIGN KEY(SellerID)
+        REFERENCES Seller(SocialSecurityNumber),
+    CONSTRAINT HouseAgentFk FOREIGN KEY(AgentID)
+        REFERENCES Agent(AgentID)
+);
+
+CREATE TABLE AgentPhone(
+    PhoneNumber NUMBER(10),
+    AgentID CHAR(8),
+    CONSTRAINT PhonePk PRIMARY KEY(PhoneNumber),
+    CONSTRAINT PhoneFk FOREIGN KEY(AgentID)
+        REFERENCES Agent(AgentID)
+);
+
+CREATE TABLE Buyer(
+    SocialSecurityNumber NUMBER(9),
+    BuyerName VARCHAR(34),
+    PhoneNumber NUMBER(10),
+    LowerPriceLimit NUMBER(10),
+    UpperPriceLimit NUMBER(10),
+    AgentID CHAR(8),
+    CONSTRAINT BuyerPk PRIMARY KEY(SocialSecurityNumber),
+    CONSTRAINT AgentRepresentingFk FOREIGN KEY(AgentID)
+        REFERENCES Agent(AgentID)
+);

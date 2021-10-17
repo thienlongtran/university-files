@@ -24,8 +24,19 @@ class Inserts{
                 String str = input.nextLine();
                 String[] attributes = str.split(",");
                 
-                String insertCommand = "INSERT INTO " + tableName + " VALUES(";
-                
+                String insertCommand = "INSERT INTO " + tableName + "(" ;
+
+                //Inserting Column Names
+                for (int i = 0; i < attributes.length-1; i++){
+                    insertCommand = insertCommand + columnName[i] + ",";
+                }
+
+                //Final Column Insert (Prevents Trailing Commas For Which A Solution Couldn't Be Made)
+                insertCommand = insertCommand + columnName[attributes.length-1];
+
+
+                insertCommand = insertCommand + ") VALUES(";
+                //Inserting Values
                 for(int i = 0; i < attributes.length-1; i++){
                     try{
                         //Type is a number

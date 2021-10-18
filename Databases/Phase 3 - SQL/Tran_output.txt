@@ -1,0 +1,129 @@
+
+Table HOUSE dropped.
+
+
+Table REALESTATEAGENTPHONE dropped.
+
+
+Table BUYER dropped.
+
+
+Table SELLER dropped.
+
+
+Table REALESTATEAGENT dropped.
+
+
+Table SELLER created.
+
+
+Table REALESTATEAGENT created.
+
+
+Table HOUSE created.
+
+
+Table REALESTATEAGENTPHONE created.
+
+
+Table BUYER created.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+Commit complete.
+

@@ -31,6 +31,19 @@ SELECT * FROM Buyer
 WHERE PhoneNumber LIKE '312%' AND AgentID <> '1'; --Version with strict requirement.
 
 --7. Find the minimum and maximum square feet for all houses. Use only one query.
+SELECT MIN(SquareFeet), MAX(SquareFeet) FROM House;
+
 --8. Find the average max price for all buyers with agent ID 1. 
+SELECT AVG(UpperPriceLimit) FROM Buyer
+WHERE AgentID = 'PL1W980'; --Default to Agent PL1W980 instead of 1 since my AgentID is complexer than a number.
+
+SELECT AVG(UpperPriceLimit) FROM Buyer
+WHERE AgentID = '1'; --Version with strict requirement.
+
 --9. Find the house with the highest price. Do not hardcode any salaries or other values.
+SELECT * FROM House
+WHERE AskingPrice = (SELECT MAX(AskingPrice) FROM House);
+
 --10. Find the houses that cost less than the average overall price for all houses + 20% (i.e., less than 1.2 * average price). Do not hardcode any prices or other values.
+SELECT * FROM House
+WHERE AskingPrice < ((SELECT AVG(AskingPrice) FROM House) * 1.2);

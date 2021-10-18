@@ -1,0 +1,10 @@
+--1. Find all the buyers (their names) within a minimum price range of $150,000.
+--2. Find all buyers with agent ID 1 and sort the query output by their max price (any direction).
+--3. Find the names of all buyers who have a phone number with a 504 area code (hint: remember the LIKE operator).
+--4. Return the house addresses that do not have a listing price.
+--5. Find the square feet of all houses with a price between $100,000 and $200,000.
+--6. Find all buyers who have a phone number with a 312 area code and do not have agent ID 1.
+--7. Find the minimum and maximum square feet for all houses. Use only one query.
+--8. Find the average max price for all buyers with agent ID 1. 
+--9. Find the house with the highest price. Do not hardcode any salaries or other values.
+--10. Find the houses that cost less than the average overall price for all houses + 20% (i.e., less than 1.2 * average price). Do not hardcode any prices or other values.

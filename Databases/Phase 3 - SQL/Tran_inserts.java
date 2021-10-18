@@ -51,7 +51,13 @@ class Inserts{
                     }
                     catch(NumberFormatException e){
                         //Type is a string
-                        insertCommand = insertCommand + "'" + attributes[i] + "',";
+                        if (attributes[i].length() > 0){
+                            insertCommand = insertCommand + "'" + attributes[i] + "',";
+                        }
+                        else{
+                            //NULL if Length 0
+                            insertCommand = insertCommand + "NULL,";
+                        }
                     }
                 }
 
@@ -63,7 +69,12 @@ class Inserts{
                 }
                 catch(NumberFormatException e){
                     //Type is a string
-                    insertCommand = insertCommand + "'" + attributes[attributes.length-1] + "'";
+                    if(attributes[attributes.length-1].length() > 0){
+                        insertCommand = insertCommand + "'" + attributes[attributes.length-1] + "'";
+                    }else{
+                        //NULL if Length 0
+                        insertCommand = insertCommand + "NULL";
+                    }
                 }
 
                 insertCommand = insertCommand + ");\n";

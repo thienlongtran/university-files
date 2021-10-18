@@ -24,6 +24,8 @@ INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,Commisio
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('YE24115','908 Lucy St.','New York',1800,440000,6,776214920,'FQ24V32');
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('ER28850','712 Starling St.','California',8040,3500000,2.25,627894001,'BC8P930');
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('YR54315','808 Central Dr.','California',6400,2600000,3.75,627894001,'FQ24V32');
+INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('FH24512','1008 Tory Rd.','Wyoming',4400,NULL,NULL,902107891,'JR4345M');
+INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('UI21053','420 Mercy Dr.','Hawaii',800,150000,5,776214920,'BC8P930');
 INSERT INTO Buyer(SocialSecurityNumber,BuyerName,PhoneNumber,LowerPriceLimit,UpperPriceLimit,AgentID) VALUES(521992490,'Dejay Khalid',5129205819,7000000,9000000,'PL1W980');
 INSERT INTO Buyer(SocialSecurityNumber,BuyerName,PhoneNumber,LowerPriceLimit,UpperPriceLimit,AgentID) VALUES(830214120,'Bruce Wayne',6082491240,100000000,300000000,'PL1W980');
 INSERT INTO Buyer(SocialSecurityNumber,BuyerName,PhoneNumber,LowerPriceLimit,UpperPriceLimit,AgentID) VALUES(241592141,'Clark Kent',5042124920,200000,300000,'JR4345M');

@@ -22,6 +22,7 @@ INSERT INTO RealEstateAgentPhone(AgentID,PhoneNumber) VALUES('FQ24V32',421522231
 INSERT INTO RealEstateAgentPhone(AgentID,PhoneNumber) VALUES('FQ24V32',4215222312);
 INSERT INTO RealEstateAgentPhone(AgentID,PhoneNumber) VALUES('BC8P930',5042132942);
 INSERT INTO RealEstateAgentPhone(AgentID,PhoneNumber) VALUES('BC8P930',5042142312);
+INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('MO92010','Canal St.','Louisiana',24000,1000000,4.25,632441829,'PL1W980');
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('AH42510','822 Donna St.','California',2400,900000,4.25,632441829,'PL1W980');
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('TR21532','709 Dory St.','Louisiana',2500,300000,6.5,812905870,'TE24A32');
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('LK35124','512 Tracy Ln.','Florida',2000,420000,5.5,902107891,'JR4345M');

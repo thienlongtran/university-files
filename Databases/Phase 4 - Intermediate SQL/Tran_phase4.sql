@@ -32,7 +32,7 @@ WHERE AgentID IN (
                  );
 
 --6. Retrieve the street address for all houses that have an agent who is not representing any buyers. 
-SELECT * FROM House
+SELECT StreetAddress FROM House
 WHERE AgentID IN (  
                     SELECT RealEstateAgent.AgentID FROM RealEstateAgent LEFT OUTER JOIN Buyer
                     ON RealEstateAgent.AgentID = Buyer.AgentID
@@ -64,14 +64,48 @@ ON RealEstateAgent.AgentID = Buyer.AgentID
 GROUP BY AgentName, RealEstateAgent.AgentID
 HAVING COUNT(BuyerName) = 2;
 
---11. For each agent whose average commission is greater than $10K, retrieve the agent’s name and the number houses they represent. 
+--11. For each agent whose average commission is greater than $10K, retrieve the agent’s name and the number houses they represent.
+SELECT AgentName, RealEstateAgent.AgentID, COUNT(HomeID) AS HousesRepresented FROM RealEstateAgent INNER JOIN House
+ON RealEstateAgent.AgentID= House.AgentID
+WHERE RealEstateAgent.AgentID IN (
+                                SELECT AgentID FROM House
+                                WHERE CommisionPercent IS NOT NULL AND AskingPrice IS NOT NULL
+                                GROUP BY AgentID
+                                HAVING AVG(CommisionPercent*AskingPrice) > 10000
+                                )
+GROUP BY AgentName, RealEstateAgent.AgentID;
+
 
 --12. Retrieve the names of all buyers who are represented by the agent who is listing the lowest priced house. 
+SELECT BuyerName FROM Buyer
+WHERE AgentID = (SELECT AgentID FROM HOUSE
+                WHERE AskingPrice = (SELECT MIN(AskingPrice) FROM House));
 
 --13. Retrieve the agent’s name and the buyer’s name for all agents who are listing a house within the buyer’s price range (i.e., house price is between minimum and maximum price range). 
+SELECT * FROM 
+    (SELECT * FROM RealEstateAgent INNER JOIN Buyer
+        ON RealEstateAgent.AgentID = Buyer.AgentID) s1
+    ,
+    (SELECT RealEstateAgent.AgentID, House.AskingPrice FROM RealEstateAgent INNER JOIN House
+        ON RealEstateAgent.AgentID = House.AgentID) s2
+        
+    ;
+
+SELECT * FROM RealEstateAgent INNER JOIN Buyer
+ON RealEstateAgent.AgentID = Buyer.AgentID;
+        
+SELECT RealEstateAgent.AgentID, House.AskingPrice FROM RealEstateAgent INNER JOIN House
+ON RealEstateAgent.AgentID = House.AgentID;
+
 
 --14. Find sellers whose SSN number has a pattern 321 repeated twice (sequentially). For example, the query should return sellers with the SSN’s ‘321-32-145’ and ‘983-21-3219’, but not ‘321-99-3218’. 
+SELECT * FROM Seller
+WHERE REGEXP_LIKE(SocialSecurityNumber, '321321');
 
 --15. Find agents whose office consists of exactly 2 words. For example, the query should return records for “Metairie Office” and “Downtown Office”, but not “University of New Orleans Office”. 
+SELECT * FROM RealEstateAgent
+WHERE REGEXP_LIKE(OfficeName, '^[a-zA-Z0-9]+\s[a-zA-Z0-9]+$');
 
---16. Find all houses that include a street number in the street address. For example, the query should return records for “2000 Lakeshore Drive” and “1500 Sugar Bowl Drive” but not “Canal Street”. 
+--16. Find all houses that include a street number in the street address. For example, the query should return records for “2000 Lakeshore Drive” and “1500 Sugar Bowl Drive” but not “Canal Street”.
+SELECT * FROM House
+WHERE REGEXP_LIKE(StreetAddress, '^[0-9]+\s');

@@ -3,11 +3,6 @@ SELECT StreetAddress FROM House INNER JOIN RealEstateAgent
 ON House.AgentID = RealEstateAgent.AgentID
 WHERE OfficeName = 'New Orleans';
 
-    --Testing since 'Office Name' in my database is company's name
-    SELECT StreetAddress FROM House INNER JOIN RealEstateAgent
-    ON House.AgentID = RealEstateAgent.AgentID
-    WHERE OfficeName = 'Jane Street';
-
 
 --2. Retrieve the street address for house which have a seller name that is the same as the listing agent’s name. 
 SELECT StreetAddress FROM House, RealEstateAgent, Seller
@@ -23,16 +18,30 @@ GROUP BY AgentName;
 
 
 --4. For each agent, list their name, office, and the total number of buyers they represent. 
-SELECT AgentName, OfficeName, COUNT(*) AS NumberOfBuyers FROM RealEstateAgent, Buyer
-WHERE RealEstateAgent.AgentID = Buyer.AgentID
+SELECT AgentName, OfficeName, COUNT(BuyerName) AS NumberOfBuyers FROM RealEstateAgent LEFT OUTER JOIN Buyer
+ON RealEstateAgent.AgentID = Buyer.AgentID
 GROUP BY AgentName, OfficeName;
 
 --5. Retrieve the street address for all houses that have an agent who is representing at least one buyer. 
-SELECT StreetAddress FROM House;
+SELECT * FROM House
+WHERE AgentID IN (  
+                    SELECT RealEstateAgent.AgentID FROM RealEstateAgent LEFT OUTER JOIN Buyer
+                    ON RealEstateAgent.AgentID = Buyer.AgentID
+                    GROUP BY RealEstateAgent.AgentID
+                    HAVING COUNT(BuyerName) >= 1
+                 );
 
 --6. Retrieve the street address for all houses that have an agent who is not representing any buyers. 
+SELECT * FROM House
+WHERE AgentID IN (  
+                    SELECT RealEstateAgent.AgentID FROM RealEstateAgent LEFT OUTER JOIN Buyer
+                    ON RealEstateAgent.AgentID = Buyer.AgentID
+                    GROUP BY RealEstateAgent.AgentID
+                    HAVING COUNT(BuyerName) = 0
+                 );
 
 --7. For each agent, retrieve the agent’s name and the average commission of all houses they are listing. 
+
 
 --8. Retrieve the average price for all houses in the state of Louisiana. 
 

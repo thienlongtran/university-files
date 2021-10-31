@@ -40,14 +40,29 @@ WHERE AgentID IN (
                     HAVING COUNT(BuyerName) = 0
                  );
 
+
 --7. For each agent, retrieve the agent’s name and the average commission of all houses they are listing. 
+SELECT AgentName, RealEstateAgent.AgentID, AVG(CommisionPercent) FROM RealEstateAgent LEFT OUTER JOIN House
+ON RealEstateAgent.AgentID = House.AgentID
+GROUP BY AgentName, RealEstateAgent.AgentID;
 
 
 --8. Retrieve the average price for all houses in the state of Louisiana. 
+SELECT AVG(AskingPrice) FROM House
+WHERE StateName = 'Louisiana';
+
 
 --9. List the names of all agents and the number of phone numbers they have. 
+SELECT AgentName, RealEstateAgent.AgentID, COUNT(PhoneNumber) FROM RealEstateAgent LEFT OUTER JOIN RealEstateAgentPhone
+ON RealEstateAgent.AgentID = RealEstateAgentPhone.AgentID
+GROUP BY AgentName, RealEstateAgent.AgentID;
+
 
 --10. Find the names of all agents who represent exactly two buyers. 
+SELECT AgentName, RealEstateAgent.AgentID FROM RealEstateAgent LEFT OUTER JOIN Buyer
+ON RealEstateAgent.AgentID = Buyer.AgentID
+GROUP BY AgentName, RealEstateAgent.AgentID
+HAVING COUNT(BuyerName) = 2;
 
 --11. For each agent whose average commission is greater than $10K, retrieve the agent’s name and the number houses they represent. 
 

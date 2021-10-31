@@ -3,6 +3,7 @@ INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('TE24A32','Scot
 INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('JR4345M','Clark Kent','Citadel');
 INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('FQ24V32','Tony Stank','Five Rings');
 INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('BC8P930','Tori Vega','Akuna Capital');
+INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('AL4765N','Steve Rogers','New Orleans');
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber,SpouseName) VALUES(632441829,'Annie Edison',5042119821,'Jeff Winger');
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(812905870,'Annie January',3468897470);
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(902107891,'Kara Danvers',6089028873);
@@ -26,6 +27,7 @@ INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,Commisio
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('YR54315','808 Central Dr.','California',6400,2600000,3.75,627894001,'FQ24V32');
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('FH24512','1008 Tory Rd.','Wyoming',4400,NULL,NULL,902107891,'JR4345M');
 INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('UI21053','420 Mercy Dr.','Hawaii',800,150000,5,776214920,'BC8P930');
+INSERT INTO House(HomeID,StreetAddress,StateName,SquareFeet,AskingPrice,CommisionPercent,SellerID,AgentID) VALUES('AO34612','420 Mercy Rd.','Virginia',4400,NULL,NULL,902107891,'AL4765N');
 INSERT INTO Buyer(SocialSecurityNumber,BuyerName,PhoneNumber,LowerPriceLimit,UpperPriceLimit,AgentID) VALUES(521992490,'Dejay Khalid',5129205819,7000000,9000000,'PL1W980');
 INSERT INTO Buyer(SocialSecurityNumber,BuyerName,PhoneNumber,LowerPriceLimit,UpperPriceLimit,AgentID) VALUES(830214120,'Bruce Wayne',6082491240,100000000,300000000,'PL1W980');
 INSERT INTO Buyer(SocialSecurityNumber,BuyerName,PhoneNumber,LowerPriceLimit,UpperPriceLimit,AgentID) VALUES(241592141,'Clark Kent',5042124920,200000,300000,'JR4345M');

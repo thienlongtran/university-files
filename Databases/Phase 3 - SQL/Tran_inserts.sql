@@ -3,12 +3,14 @@ INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('TE24A32','Scot
 INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('JR4345M','Clark Kent','Citadel');
 INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('FQ24V32','Tony Stank','Five Rings');
 INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('BC8P930','Tori Vega','Akuna Capital');
+INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('PP0C930','Mike Diva','Hudson River Trading');
 INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('AL4765N','Steve Rogers','New Orleans');
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber,SpouseName) VALUES(632441829,'Annie Edison',5042119821,'Jeff Winger');
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(812905870,'Annie January',3468897470);
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(902107891,'Kara Danvers',6089028873);
+INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(776321321,'Mia Dearden',3225291190);
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(321321552,'Kara Zor-El',5042259284);
-INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(776214920,'Wanda Maximoff',3225290090);
+INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(776321321,'Mia Dearden',3225291190);INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(776214920,'Wanda Maximoff',3225290090);
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber,SpouseName) VALUES(627894001,'Oliver Queen',5042218794,'Felicity Smoak');
 INSERT INTO RealEstateAgentPhone(AgentID,PhoneNumber) VALUES('PL1W980',5049284412);
 INSERT INTO RealEstateAgentPhone(AgentID,PhoneNumber) VALUES('PL1W980',5049289201);

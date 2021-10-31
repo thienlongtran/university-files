@@ -1,10 +1,29 @@
 --1. Retrieve the street address for houses with an agent in the New Orleans office. 
+SELECT StreetAddress FROM House, RealEstateAgent
+WHERE House.AgentID = RealEstateAgent.AgentID AND OfficeName = 'New Orleans';
+
+    --Testing since 'Office Name' in my database is company's name
+    SELECT StreetAddress FROM House, RealEstateAgent
+    WHERE House.AgentID = RealEstateAgent.AgentID AND OfficeName = 'Jane Street';
+
 
 --2. Retrieve the street address for house which have a seller name that is the same as the listing agent’s name. 
+SELECT StreetAddress FROM House, RealEstateAgent, Seller
+WHERE House.SellerID = Seller.SocialSecurityNumber AND House.AgentID = RealEstateAgent.AgentID
+    AND AgentName = SellerName;
+
 
 --3. Find names of all agents who represent a buyer with a minimum price range greater than $80K and a maximum price range less than $225K. 
+SELECT AgentName FROM RealEstateAgent, Buyer
+WHERE Buyer.AgentID = RealEstateAgent.AgentID
+    AND LowerPriceLimit > 80000 AND UpperPriceLimit < 225000
+GROUP BY AgentName;
+
 
 --4. For each agent, list their name, office, and the total number of buyers they represent. 
+SELECT AgentName, OfficeName, COUNT(*) AS NumberOfBuyers FROM RealEstateAgent, Buyer
+WHERE RealEstateAgent.AgentID = Buyer.AgentID
+GROUP BY AgentName, OfficeName;
 
 --5. Retrieve the street address for all houses that have an agent who is representing at least one buyer. 
 

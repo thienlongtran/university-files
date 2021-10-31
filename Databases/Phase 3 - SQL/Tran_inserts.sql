@@ -7,6 +7,7 @@ INSERT INTO RealEstateAgent(AgentID,AgentName,OfficeName) VALUES('AL4765N','Stev
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber,SpouseName) VALUES(632441829,'Annie Edison',5042119821,'Jeff Winger');
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(812905870,'Annie January',3468897470);
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(902107891,'Kara Danvers',6089028873);
+INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(321321552,'Kara Zor-El',5042259284);
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber) VALUES(776214920,'Wanda Maximoff',3225290090);
 INSERT INTO Seller(SocialSecurityNumber,SellerName,PhoneNumber,SpouseName) VALUES(627894001,'Oliver Queen',5042218794,'Felicity Smoak');
 INSERT INTO RealEstateAgentPhone(AgentID,PhoneNumber) VALUES('PL1W980',5049284412);

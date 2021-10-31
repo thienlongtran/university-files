@@ -1,10 +1,12 @@
 --1. Retrieve the street address for houses with an agent in the New Orleans office. 
-SELECT StreetAddress FROM House, RealEstateAgent
-WHERE House.AgentID = RealEstateAgent.AgentID AND OfficeName = 'New Orleans';
+SELECT StreetAddress FROM House INNER JOIN RealEstateAgent
+ON House.AgentID = RealEstateAgent.AgentID
+WHERE OfficeName = 'New Orleans';
 
     --Testing since 'Office Name' in my database is company's name
-    SELECT StreetAddress FROM House, RealEstateAgent
-    WHERE House.AgentID = RealEstateAgent.AgentID AND OfficeName = 'Jane Street';
+    SELECT StreetAddress FROM House INNER JOIN RealEstateAgent
+    ON House.AgentID = RealEstateAgent.AgentID
+    WHERE OfficeName = 'Jane Street';
 
 
 --2. Retrieve the street address for house which have a seller name that is the same as the listing agent’s name. 
@@ -26,6 +28,7 @@ WHERE RealEstateAgent.AgentID = Buyer.AgentID
 GROUP BY AgentName, OfficeName;
 
 --5. Retrieve the street address for all houses that have an agent who is representing at least one buyer. 
+SELECT StreetAddress FROM House;
 
 --6. Retrieve the street address for all houses that have an agent who is not representing any buyers. 
 

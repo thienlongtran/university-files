@@ -82,20 +82,11 @@ WHERE AgentID = (SELECT AgentID FROM HOUSE
                 WHERE AskingPrice = (SELECT MIN(AskingPrice) FROM House));
 
 --13. Retrieve the agent’s name and the buyer’s name for all agents who are listing a house within the buyer’s price range (i.e., house price is between minimum and maximum price range). 
-SELECT * FROM 
-    (SELECT * FROM RealEstateAgent INNER JOIN Buyer
-        ON RealEstateAgent.AgentID = Buyer.AgentID) s1
-    ,
-    (SELECT RealEstateAgent.AgentID, House.AskingPrice FROM RealEstateAgent INNER JOIN House
-        ON RealEstateAgent.AgentID = House.AgentID) s2
-        
-    ;
-
-SELECT * FROM RealEstateAgent INNER JOIN Buyer
-ON RealEstateAgent.AgentID = Buyer.AgentID;
-        
-SELECT RealEstateAgent.AgentID, House.AskingPrice FROM RealEstateAgent INNER JOIN House
-ON RealEstateAgent.AgentID = House.AgentID;
+SELECT AgentName, BuyerName FROM RealEstateAgent INNER JOIN Buyer
+ON RealEstateAgent.AgentID = Buyer.AgentID
+INNER JOIN House
+ON RealEstateAgent.AgentID = House.AgentID
+WHERE UpperPriceLimit > AskingPrice AND LowerPriceLimit < AskingPrice;
 
 
 --14. Find sellers whose SSN number has a pattern 321 repeated twice (sequentially). For example, the query should return sellers with the SSN’s ‘321-32-145’ and ‘983-21-3219’, but not ‘321-99-3218’. 

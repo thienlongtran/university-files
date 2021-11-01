@@ -4,7 +4,7 @@ ON House.AgentID = RealEstateAgent.AgentID
 WHERE OfficeName = 'New Orleans';
 
 
---2. Retrieve the street address for house which have a seller name that is the same as the listing agent’s name. 
+--2. Retrieve the street address for house which have a seller name that is the same as the listing agentâ€™s name. 
 SELECT StreetAddress FROM House, RealEstateAgent, Seller
 WHERE House.SellerID = Seller.SocialSecurityNumber AND House.AgentID = RealEstateAgent.AgentID
     AND AgentName = SellerName;
@@ -21,6 +21,7 @@ GROUP BY AgentName;
 SELECT AgentName, OfficeName, COUNT(BuyerName) AS NumberOfBuyers FROM RealEstateAgent LEFT OUTER JOIN Buyer
 ON RealEstateAgent.AgentID = Buyer.AgentID
 GROUP BY AgentName, OfficeName;
+
 
 --5. Retrieve the street address for all houses that have an agent who is representing at least one buyer. 
 SELECT * FROM House
@@ -42,7 +43,7 @@ WHERE AgentID IN (
                  );
 
 
---7. For each agent, retrieve the agent’s name and the average commission of all houses they are listing. 
+--7. For each agent, retrieve the agentâ€™s name and the average commission of all houses they are listing. 
 SELECT AgentName, RealEstateAgent.AgentID, AVG(CommisionPercent) FROM RealEstateAgent LEFT OUTER JOIN House
 ON RealEstateAgent.AgentID = House.AgentID
 GROUP BY AgentName, RealEstateAgent.AgentID;
@@ -66,7 +67,7 @@ GROUP BY AgentName, RealEstateAgent.AgentID
 HAVING COUNT(BuyerName) = 2;
 
 
---11. For each agent whose average commission is greater than $10K, retrieve the agent’s name and the number houses they represent.
+--11. For each agent whose average commission is greater than $10K, retrieve the agentâ€™s name and the number houses they represent.
 SELECT AgentName, RealEstateAgent.AgentID, COUNT(HomeID) AS HousesRepresented FROM RealEstateAgent INNER JOIN House
 ON RealEstateAgent.AgentID= House.AgentID
 WHERE RealEstateAgent.AgentID IN (
@@ -84,7 +85,7 @@ WHERE AgentID = (SELECT AgentID FROM HOUSE
                 WHERE AskingPrice = (SELECT MIN(AskingPrice) FROM House));
 
 
---13. Retrieve the agent’s name and the buyer’s name for all agents who are listing a house within the buyer’s price range (i.e., house price is between minimum and maximum price range). 
+--13. Retrieve the agentâ€™s name and the buyerâ€™s name for all agents who are listing a house within the buyerâ€™s price range (i.e., house price is between minimum and maximum price range). 
 SELECT AgentName, BuyerName FROM RealEstateAgent INNER JOIN Buyer
 ON RealEstateAgent.AgentID = Buyer.AgentID
 INNER JOIN House
@@ -92,16 +93,16 @@ ON RealEstateAgent.AgentID = House.AgentID
 WHERE UpperPriceLimit > AskingPrice AND LowerPriceLimit < AskingPrice;
 
 
---14. Find sellers whose SSN number has a pattern 321 repeated twice (sequentially). For example, the query should return sellers with the SSN’s ‘321-32-145’ and ‘983-21-3219’, but not ‘321-99-3218’. 
+--14. Find sellers whose SSN number has a pattern 321 repeated twice (sequentially). For example, the query should return sellers with the SSNâ€™s â€˜321-32-145â€™ and â€˜983-21-3219â€™, but not â€˜321-99-3218â€™. 
 SELECT * FROM Seller
 WHERE REGEXP_LIKE(SocialSecurityNumber, '3[\-]*2[\-]*1[\-]*3[\-]*2[\-]*1[\-]*');
 
 
---15. Find agents whose office consists of exactly 2 words. For example, the query should return records for “Metairie Office” and “Downtown Office”, but not “University of New Orleans Office”. 
+--15. Find agents whose office consists of exactly 2 words. For example, the query should return records for â€œMetairie Officeâ€ and â€œDowntown Officeâ€, but not â€œUniversity of New Orleans Officeâ€. 
 SELECT * FROM RealEstateAgent
 WHERE REGEXP_LIKE(OfficeName, '^[a-zA-Z0-9]+\s[a-zA-Z0-9]+$');
 
 
---16. Find all houses that include a street number in the street address. For example, the query should return records for “2000 Lakeshore Drive” and “1500 Sugar Bowl Drive” but not “Canal Street”.
+--16. Find all houses that include a street number in the street address. For example, the query should return records for â€œ2000 Lakeshore Driveâ€ and â€œ1500 Sugar Bowl Driveâ€ but not â€œCanal Streetâ€.
 SELECT * FROM House
 WHERE REGEXP_LIKE(StreetAddress, '^[0-9]+\s');

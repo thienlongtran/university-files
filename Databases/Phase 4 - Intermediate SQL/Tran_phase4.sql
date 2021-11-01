@@ -31,6 +31,7 @@ WHERE AgentID IN (
                     HAVING COUNT(BuyerName) >= 1
                  );
 
+
 --6. Retrieve the street address for all houses that have an agent who is not representing any buyers. 
 SELECT StreetAddress FROM House
 WHERE AgentID IN (  
@@ -64,6 +65,7 @@ ON RealEstateAgent.AgentID = Buyer.AgentID
 GROUP BY AgentName, RealEstateAgent.AgentID
 HAVING COUNT(BuyerName) = 2;
 
+
 --11. For each agent whose average commission is greater than $10K, retrieve the agent’s name and the number houses they represent.
 SELECT AgentName, RealEstateAgent.AgentID, COUNT(HomeID) AS HousesRepresented FROM RealEstateAgent INNER JOIN House
 ON RealEstateAgent.AgentID= House.AgentID
@@ -81,6 +83,7 @@ SELECT BuyerName FROM Buyer
 WHERE AgentID = (SELECT AgentID FROM HOUSE
                 WHERE AskingPrice = (SELECT MIN(AskingPrice) FROM House));
 
+
 --13. Retrieve the agent’s name and the buyer’s name for all agents who are listing a house within the buyer’s price range (i.e., house price is between minimum and maximum price range). 
 SELECT AgentName, BuyerName FROM RealEstateAgent INNER JOIN Buyer
 ON RealEstateAgent.AgentID = Buyer.AgentID
@@ -91,11 +94,13 @@ WHERE UpperPriceLimit > AskingPrice AND LowerPriceLimit < AskingPrice;
 
 --14. Find sellers whose SSN number has a pattern 321 repeated twice (sequentially). For example, the query should return sellers with the SSN’s ‘321-32-145’ and ‘983-21-3219’, but not ‘321-99-3218’. 
 SELECT * FROM Seller
-WHERE REGEXP_LIKE(SocialSecurityNumber, '321321');
+WHERE REGEXP_LIKE(SocialSecurityNumber, '3[\-]*2[\-]*1[\-]*3[\-]*2[\-]*1[\-]*');
+
 
 --15. Find agents whose office consists of exactly 2 words. For example, the query should return records for “Metairie Office” and “Downtown Office”, but not “University of New Orleans Office”. 
 SELECT * FROM RealEstateAgent
 WHERE REGEXP_LIKE(OfficeName, '^[a-zA-Z0-9]+\s[a-zA-Z0-9]+$');
+
 
 --16. Find all houses that include a street number in the street address. For example, the query should return records for “2000 Lakeshore Drive” and “1500 Sugar Bowl Drive” but not “Canal Street”.
 SELECT * FROM House

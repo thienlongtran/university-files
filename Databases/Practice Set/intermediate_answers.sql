@@ -1,10 +1,22 @@
 -- Find the number of customers for each city
+SELECT C_City, COUNT(C_ID) FROM Customer
+GROUP BY C_City;
 
 -- Find the total price for all orders
+SELECT O_ID, O_CustID, O_SuppID, O_PartID, O_Date, O_ShipMode, P_Price AS TotalPrice
+FROM Orders INNER JOIN Part
+ON O_PartID = P_ID;
 
 -- Find the city with the most customers
+SELECT C_City, COUNT(C_ID) AS CityCount FROM Customer
+GROUP BY C_City
+HAVING COUNT(C_ID) = (SELECT MAX(NumCustomers) FROM (
+                   SELECT C_City, COUNT(C_ID) AS NumCustomers FROM Customer
+                   GROUP BY C_City));
 
 -- Find all suppliers that live in a city that has customers
+SELECT * FROM Supplier
+WHERE S_City IN (SELECT UNIQUE(C_City) FROM Customer);
 
 -- Find all supplier that live in a city without customers
 

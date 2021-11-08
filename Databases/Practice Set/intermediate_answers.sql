@@ -62,14 +62,41 @@ HAVING COUNT(*) = ( SELECT MAX(COUNT(*)) FROM Customer c, Orders o, Part p
                     GROUP BY C_Name );
 
 -- Find the supplier who has fulfilled the most orders
+SELECT s.S_ID, s.S_Name, COUNT(*) FROM Supplier s INNER JOIN Orders o
+ON s.S_ID = o.O_SuppID
+GROUP BY s.S_ID, s.S_Name
+HAVING COUNT(*) = ( SELECT MAX(COUNT(*)) FROM Supplier s INNER JOIN Orders o
+                    ON s.S_ID = o.O_SuppID
+                    GROUP BY s.S_ID, s.S_Name );
 
 -- Find the city that ships the most parts by Boat to a customer's city
+SELECT C_ID, C_Name, C_City, COUNT(*) AS Orders FROM Customer INNER JOIN Orders
+ON C_ID = O_CustID
+WHERE O_ShipMode = 'Boat'
+GROUP BY C_ID, C_Name, C_City
+HAVING COUNT(*) = ( SELECT MAX(COUNT(*)) FROM Customer INNER JOIN Orders
+                    ON C_ID = O_CustID
+                    WHERE O_ShipMode = 'Boat'
+                    GROUP BY C_ID, C_Name, C_City);
 
 -- Find the average part size for each shipping mode
+SELECT O_ShipMode, AVG(P_Size) FROM Part INNER JOIN Orders
+ON P_ID = O_PartID
+GROUP BY O_ShipMode;
 
 -- Find all customers who purchased a Gremlin
+SELECT C_ID, C_Name FROM Customer INNER JOIN Orders
+ON O_CustID = C_ID
+INNER JOIN Part
+ON P_ID = O_PartID
+WHERE P_Name = 'Gremlin';
+                 
+-- Find all parts with the same size
+SELECT * FROM Part p1, Part p2
+WHERE p1.P_ID != p2.P_ID
+AND p1.P_Size = p2.P_Size;
 
--- Find all parts with the same size-- Find the number of customers for each city
+-- Find the number of customers for each city
 
 -- Find the city with the most customers
 

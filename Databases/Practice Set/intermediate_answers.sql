@@ -1,9 +1,10 @@
 -- Find the number of customers for each city
 SELECT C_City, COUNT(C_ID) FROM Customer
-GROUP BY C_City;
+GROUP BY C_City
+ORDER BY COUNT(C_ID);
 
 -- Find the total price for all orders
-SELECT O_ID, O_CustID, O_SuppID, O_PartID, O_Date, O_ShipMode, P_Price AS TotalPrice
+SELECT SUM(P_Price)
 FROM Orders INNER JOIN Part
 ON O_PartID = P_ID;
 
@@ -19,16 +20,46 @@ SELECT * FROM Supplier
 WHERE S_City IN (SELECT UNIQUE(C_City) FROM Customer);
 
 -- Find all supplier that live in a city without customers
+SELECT * FROM Supplier
+WHERE S_City NOT IN (SELECT UNIQUE(C_City) FROM Customer);
 
 -- Find the average size and price for each part name
+SELECT P_Name, AVG(P_PRICE), AVG(P_Size) FROM Part
+GROUP BY P_Name;
 
 -- Find the most common part color
+SELECT P_Color, COUNT(*) FROM Part
+GROUP BY P_Color
+HAVING COUNT(*) = (SELECT MAX(COUNT(*)) FROM Part
+                   GROUP BY P_Color);
 
 -- Find all shipping modes for Gremlins
+SELECT DISTINCT(O_ShipMode) FROM Orders
+WHERE O_PartID IN (SELECT P_ID FROM Part
+                   WHERE P_Name = 'Gremlin');
 
 -- Find the most common shipping mode for Gremlins
-
+SELECT O_ShipMode, COUNT(*) FROM Orders
+WHERE O_PartID IN (SELECT P_ID FROM Part
+                   WHERE P_Name = 'Gremlin')
+GROUP BY O_ShipMode
+HAVING COUNT(*) =
+    (SELECT MAX(COUNT(*)) FROM Orders
+    WHERE O_PartID IN (SELECT P_ID FROM Part
+                       WHERE P_Name = 'Gremlin')
+    GROUP BY O_ShipMode);
+                   
 -- Find the customer who has ordered the most Gremlins
+SELECT C_Name, COUNT(*) FROM Customer c, Orders o, Part p
+WHERE c.C_ID = o.O_CustID
+AND o.O_PartID = p.P_ID
+AND p.P_Name = 'Gremlin'
+GROUP BY C_Name
+HAVING COUNT(*) = ( SELECT MAX(COUNT(*)) FROM Customer c, Orders o, Part p
+                    WHERE c.C_ID = o.O_CustID
+                    AND o.O_PartID = p.P_ID
+                    AND p.P_Name = 'Gremlin'
+                    GROUP BY C_Name );
 
 -- Find the supplier who has fulfilled the most orders
 

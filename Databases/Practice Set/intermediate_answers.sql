@@ -95,33 +95,3 @@ WHERE P_Name = 'Gremlin';
 SELECT * FROM Part p1, Part p2
 WHERE p1.P_ID != p2.P_ID
 AND p1.P_Size = p2.P_Size;
-
--- Find the number of customers for each city
-
--- Find the city with the most customers
-
--- Find the most common part color
-
--- Find all suppliers that live in a city that has customers
-
--- Find all supplier that live in a city without customers
-
--- Find the average size and price for each part name
-
--- Find all shipping modes for Gremlins
-
--- Find the most common shipping mode for Gremlins
-
--- Find the customer who has ordered the most Gremlins
-
--- Find the supplier who has fulfilled the most orders
-
--- Find the city that ships the most parts by Boat to a customer's city
-
--- Find the average part size for each shipping mode
-
--- Find the total price for all orders
-
--- Find all customers who purchased a Gremlin
-
--- Find all parts with the same size
